@@ -2,86 +2,147 @@ package com.brainacad;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
-
-import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 public class HttpClientHelper {
 
-    public static HttpResponse get(String endpointUrl, String parameters){
-       //TODO: написать метод для GET запроса с хедерами по умолчанию
-       return null;
+    private static Map<String, String> headers=new HashMap<>();
+
+    static {
+        headers.put("Content-Type", "application/json");
     }
+
 
     //REST GET запрос
-    public static HttpResponse get(String endpointUrl, String parameters, Map<String, String> headers) throws IOException {
-        //Создаём экземпляр HTTP клиента
-        HttpClient client = HttpClientBuilder.create().build();
-        //Создаём HTTP GET запрос из URL и параметров
-        HttpGet request = new HttpGet(endpointUrl+"?"+parameters);
+    public static HttpResponse get(String endpointUrl, String parameters) throws IOException {
+        HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
 
-        //добавляем в запрос необходимые хедеры
+        HttpGet request = new HttpGet(endpointUrl+"?"+parameters); //Создаём HTTP GET запрос из URL и параметров
+
         for(String headerKey:headers.keySet()) {
-            request.addHeader(headerKey, headers.get(headerKey));
+            request.addHeader(headerKey, headers.get(headerKey)); //добавляем в запрос необходимые хедеры
         }
 
-        //выполняем запрос в HTTP клиенте и получаем ответ
-        HttpResponse response = client.execute(request);
+        HttpResponse response = client.execute(request); //выполняем запрос в HTTP клиенте и получаем ответ
 
-        //возвращаем response
-        return response;
+        return response; //возвращаем response
     }
 
 
-    public static HttpResponse post(String endpointUrl, String parameters){
-        //TODO: написать метод для POST запроса с хедерами по умолчанию
-        return null;
+    public static HttpResponse post(String endpointUrl, String parameters, String body) throws IOException {
+        if (parameters != null) {
+            endpointUrl = endpointUrl+"?"+parameters;
+        }
+
+        Map<String, String> headers = new HashMap<>();
+
+        headers.put("Content-Type", "application/json");
+
+        //TODO: написать метод для POST запроса с хедерами по умолчанию *********
+        return post(endpointUrl, body, headers);
     }
 
     public static HttpResponse post(String endpointUrl, String body, Map<String, String> headers) throws IOException{
-        //Создаём экземпляр HTTP клиента
-        HttpClient client = HttpClientBuilder.create().build();
-        //Создаём HTTP POST запрос из URL и параметров
+
+        HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
+
         HttpPost post = new HttpPost(endpointUrl);
 
-        //добавляем в запрос необходимые хедеры
         for(String headerKey:headers.keySet()) {
-            post.addHeader(headerKey, headers.get(headerKey));
+            post.addHeader(headerKey, headers.get(headerKey)); //добавляем в запрос необходимые хедеры
         }
 
-        //добавляем к запросу тело запроса
-        post.setEntity(new StringEntity(body));
+        if (body != null) {
+            post.setEntity(new StringEntity(body)); //добавляем к запросу тело запроса
+        }
 
-        //выполняем запрос в HTTP клиенте и получаем ответ
-        HttpResponse response = client.execute(post);
+        HttpResponse response = client.execute(post);  //выполняем запрос в HTTP клиенте и получаем ответ
 
-        //возвращаем response
-        return response;
+        return response; //возвращаем response
     }
 
 
     public static String getBodyFromResponse(HttpResponse response) throws IOException {
-        //создаём ридер буффера и передаём в него входящий поток респонса
+
         BufferedReader rd = new BufferedReader(
-                new InputStreamReader(response.getEntity().getContent()));
+                new InputStreamReader(response.getEntity().getContent()));  //создаём ридер буффера и передаём в него входящий поток респонса
 
         StringBuffer result = new StringBuffer();
         String line;
 
-        //получаем в цикле построчно строки из входящего потока и собираем в одну строку
         while ((line = rd.readLine()) != null) {
-            result.append(line);
+            result.append(line); //получаем в цикле построчно строки из входящего потока и собираем в одну строку
         }
         return result.toString();
     }
+
+
+    public static HttpResponse put(String endpointUrl, String body, Map<String, String> headers) throws IOException{
+
+        HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
+
+
+        HttpPut put = new HttpPut(endpointUrl);  //Создаём HTTP POST запрос из URL и параметров
+
+        for(String headerKey:headers.keySet()) {
+            put.addHeader(headerKey, headers.get(headerKey)); //добавляем в запрос необходимые хедеры
+        }
+
+
+        if (body != null) {
+            put.setEntity(new StringEntity(body)); //добавляем к запросу тело запроса
+        }
+
+        HttpResponse response = client.execute(put);  //выполняем запрос в HTTP клиенте и получаем ответ
+
+        return response; //возвращаем response
+    }
+
+    public static HttpResponse patch(String endpointUrl, String body, Map<String, String> headers) throws IOException{
+
+        HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
+
+
+        HttpPatch patch = new HttpPatch(endpointUrl);  //Создаём HTTP POST запрос из URL и параметров
+
+        for(String headerKey:headers.keySet()) {
+            patch.addHeader(headerKey, headers.get(headerKey)); //добавляем в запрос необходимые хедеры
+        }
+
+
+        if (body != null) {
+            patch.setEntity(new StringEntity(body)); //добавляем к запросу тело запроса
+        }
+
+        HttpResponse response = client.execute(patch);  //выполняем запрос в HTTP клиенте и получаем ответ
+
+        return response; //возвращаем response
+    }
+
+
+    public static HttpResponse delete(String endpointUrl, String parameters) throws IOException {
+        HttpClient client = HttpClientBuilder.create().build();
+
+        HttpDelete request = new HttpDelete(endpointUrl+"?"+parameters);
+
+        for(String headerKey:headers.keySet()) {
+            request.addHeader(headerKey, headers.get(headerKey));
+        }
+
+        HttpResponse response = client.execute(request);
+
+        return response;
+    }
+
+
 
     //TODO: допишите методы для запросов PUT, PATCH и DELETE
 }
