@@ -27,6 +27,16 @@ public class RestTest{
     }
 
     @Test//GET метод
+    public void checkGetAllUsers() throws IOException {
+        String endpoint="/api/users?page=2";
+
+        HttpResponse response = HttpClientHelper.get(URL+endpoint,"page=2"); // и сохраняем результат в переменную response.
+        int statusCode = response.getStatusLine().getStatusCode();  //получаем статус код из ответа
+        System.out.println("Response Code : " + statusCode);
+        Assert.assertEquals("Response status code should be 200", 200, statusCode);
+    }
+
+    @Test//GET метод
     public void checkGetResponseBodyNotNull() throws IOException {
         String endpoint="/api/users";
 
