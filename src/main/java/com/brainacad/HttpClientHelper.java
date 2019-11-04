@@ -1,5 +1,6 @@
 package com.brainacad;
 
+import io.qameta.allure.Step;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
@@ -22,6 +23,7 @@ public class HttpClientHelper {
 
 
     //REST GET запрос
+    @Step
     public static HttpResponse get(String endpointUrl, String parameters) throws IOException {
         HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
 
@@ -36,7 +38,7 @@ public class HttpClientHelper {
         return response; //возвращаем response
     }
 
-
+    @Step
     public static HttpResponse post(String endpointUrl, String parameters, String body) throws IOException {
         if (parameters != null) {
             endpointUrl = endpointUrl+"?"+parameters;
@@ -50,6 +52,7 @@ public class HttpClientHelper {
         return post(endpointUrl, body, headers);
     }
 
+    @Step
     public static HttpResponse post(String endpointUrl, String body, Map<String, String> headers) throws IOException{
 
         HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
@@ -70,6 +73,7 @@ public class HttpClientHelper {
     }
 
 
+    @Step
     public static String getBodyFromResponse(HttpResponse response) throws IOException {
 
         BufferedReader rd = new BufferedReader(
@@ -85,6 +89,7 @@ public class HttpClientHelper {
     }
 
 
+    @Step
     public static HttpResponse put(String endpointUrl, String body, Map<String, String> headers) throws IOException{
 
         HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
@@ -106,6 +111,7 @@ public class HttpClientHelper {
         return response; //возвращаем response
     }
 
+    @Step
     public static HttpResponse patch(String endpointUrl, String body, Map<String, String> headers) throws IOException{
 
         HttpClient client = HttpClientBuilder.create().build(); //Создаём экземпляр HTTP клиента
@@ -127,7 +133,7 @@ public class HttpClientHelper {
         return response; //возвращаем response
     }
 
-
+    @Step
     public static HttpResponse delete(String endpointUrl, String parameters) throws IOException {
         HttpClient client = HttpClientBuilder.create().build();
 
@@ -141,7 +147,6 @@ public class HttpClientHelper {
 
         return response;
     }
-
 
 
     //TODO: допишите методы для запросов PUT, PATCH и DELETE
