@@ -1,16 +1,7 @@
 package com.brainacad;
 
-import org.apache.http.HttpResponse;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class RestTest{
-
+    /*
     private static final String URL="https://reqres.in/";
 
     @Test//GET метод
@@ -143,5 +134,5 @@ public class RestTest{
 
     //TODO: напишите по тесткейсу на каждый вариант запроса на сайте https://reqres.in
     //TODO: в тескейсах проверьте Result Code и несколько параметров из JSON ответа (если он есть)
-
+*/
 }

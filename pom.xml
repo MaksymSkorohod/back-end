@@ -21,6 +21,12 @@
   </properties>
 
   <dependencies>
+    <!-- https://mvnrepository.com/artifact/com.trivago.rta/cluecumber-report-plugin -->
+    <dependency>
+      <groupId>com.trivago.rta</groupId>
+      <artifactId>cluecumber-report-plugin</artifactId>
+      <version>2.3.1</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -44,6 +50,18 @@
         <artifactId>aspectjweaver</artifactId>
         <version>${aspectj.version}</version>
       </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-java</artifactId>
+      <version>4.8.0</version>
+    </dependency>
+    <dependency>
+      <groupId>io.cucumber</groupId>
+      <artifactId>cucumber-junit</artifactId>
+      <version>4.8.0</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -69,7 +87,6 @@
               </property>
             </systemProperties>
           </configuration>
-
         </plugin>
         <plugin>
           <groupId>io.qameta.allure</groupId>
