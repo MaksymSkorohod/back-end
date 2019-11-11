@@ -22,6 +22,12 @@ Feature: My firs feature
     Then  I get response status code "200"
     Then  I get body not null
 
+  Scenario: Verify that PATCH request modifies user
+    Given I have server by URL "https://reqres.in/"
+    When  I send PATCH request on endpoint "/api/users/2" and body "{  \"name\": \"morpheus\", \"job\": \"zion resident\"}"
+    And   Send "name" name and "job" job
+    Then  I get response status code "200"
+    Then  I get body not null
 
 
 
